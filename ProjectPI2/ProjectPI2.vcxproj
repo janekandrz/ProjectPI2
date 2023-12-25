@@ -125,6 +125,7 @@
     <ClCompile Include="LoginForm.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PrzelejForm.cpp" />
+    <ClCompile Include="RegisterForm.cpp" />
     <ClCompile Include="WplacForm.cpp" />
     <ClCompile Include="WyplacForm.cpp" />
   </ItemGroup>
@@ -138,7 +139,9 @@
     <ClInclude Include="PrzelejForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="sqlconnection.h" />
+    <ClInclude Include="RegisterForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="user.h" />
     <ClInclude Include="WplacForm.h">
       <FileType>CppForm</FileType>
@@ -156,6 +159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PrzelejForm.resx">
       <DependentUpon>PrzelejForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegisterForm.resx">
+      <DependentUpon>RegisterForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WyplacForm.resx">
       <DependentUpon>WyplacForm.h</DependentUpon>

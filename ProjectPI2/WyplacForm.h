@@ -1,7 +1,6 @@
-#include"user.h"
-
-
 #pragma once
+
+#include"user.h"
 
 namespace ProjectPI2 {
 
@@ -95,7 +94,6 @@ namespace ProjectPI2 {
 			this->labelKwota->Size = System::Drawing::Size(46, 16);
 			this->labelKwota->TabIndex = 2;
 			this->labelKwota->Text = L"Kwota ";
-			this->labelKwota->Click += gcnew System::EventHandler(this, &WyplacForm::label1_Click);
 			// 
 			// TBkwota
 			// 
@@ -103,7 +101,6 @@ namespace ProjectPI2 {
 			this->TBkwota->Name = L"TBkwota";
 			this->TBkwota->Size = System::Drawing::Size(439, 22);
 			this->TBkwota->TabIndex = 3;
-			this->TBkwota->TextChanged += gcnew System::EventHandler(this, &WyplacForm::TBkwota_TextChanged);
 			// 
 			// Wyp³aæ
 			// 
@@ -135,16 +132,42 @@ namespace ProjectPI2 {
 
 		}
 #pragma endregion
-	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
-	}
-	private: System::Void TBkwota_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-		//zrobic jakos konwertowanie wpisanego i dzialanie na bazie danych 
-
-	}
-	private: System::Void buttonCancel_Click(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void buttonCancel_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
-	}
-	private: System::Void buttonOK_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void buttonOK_Click(System::Object^ sender, System::EventArgs^ e) {
+		String^ newkwota = this->TBkwota->Text;
+		if (newkwota == "") {
+			MessageBox::Show("Wprowadz kwote");
+		}
+		else {
+			int kwota = Convert::ToInt32(newkwota);
+			if (kwota < 0) {
+				MessageBox::Show("Wprowadz dodatnia kwote");
+			}
+			if(kwota> User::saldo) {
+				MessageBox::Show("Nie masz tyle srodkow");
+			}
+			else {
+				String^ constring = "Data Source=localhost\\sqlexpress;Initial Catalog=dane;Integrated Security=True";
+
+				SqlConnection^ conDataBase = gcnew SqlConnection(constring);
+				SqlCommand^ cmdDataBase = gcnew SqlCommand("update Users set Saldo=Saldo-@kwota where id=@id;", conDataBase);
+				cmdDataBase->Parameters->AddWithValue("@kwota", kwota);
+				cmdDataBase->Parameters->AddWithValue("@id", User::id);
+				SqlDataReader^ myReader;
+				try {
+					conDataBase->Open();
+					myReader = cmdDataBase->ExecuteReader();
+					User::saldo -= kwota;
+					MessageBox::Show("Wplacono");
+					this->Close();
+				}
+				catch (Exception^ ex) {
+					MessageBox::Show(ex->Message);
+				}
+			}
 		}
 	};
 };
+}

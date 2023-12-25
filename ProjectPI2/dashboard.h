@@ -23,10 +23,11 @@ namespace ProjectPI2 {
 	public ref class dashboard: public System::Windows::Forms::Form{
 	public:
 		User^ user;
-		ProjectPI2::LoginForm^ login;
-		ProjectPI2::WyplacForm^ wyplac;
-		ProjectPI2::WplacForm^ wplac;
-		ProjectPI2::PrzelejForm^ przelej;
+		LoginForm^ login;
+		WyplacForm^ wyplac;
+		WplacForm^ wplac;
+		PrzelejForm^ przelej;
+	
 	public:
 		dashboard(void)
 		{
@@ -36,15 +37,17 @@ namespace ProjectPI2 {
 			//
 
 			labelwelcome->Text = "Witaj, " + user->username;
+			labelid->Text = "id= " + user->id;
 			labelusername->Text = "username= " + user->username;
 			labelemail->Text = "email= " + user->email;
 			labelpesel->Text = "pesel= " + user->pesel;
 			labeladdress->Text = "adres= " + user->address;
+			labelsaldo->Text = "saldo= " + user->saldo;
 
-			/*user = gcnew User();
+			wplac = gcnew WplacForm();
 			wyplac = gcnew WyplacForm();
 			wplac = gcnew WplacForm();
-			przelej = gcnew PrzelejForm();*/
+			przelej = gcnew PrzelejForm();
 		}
 
 	protected:
@@ -58,6 +61,7 @@ namespace ProjectPI2 {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::Label^ labelsaldo;
 	private: System::Windows::Forms::Label^ labelstronaglowna;
 	private: System::Windows::Forms::Label^ labelid;
 	private: System::Windows::Forms::Label^ labelusername;
@@ -99,6 +103,7 @@ namespace ProjectPI2 {
 			this->buttonprzelew = (gcnew System::Windows::Forms::Button());
 			this->buttonwplac = (gcnew System::Windows::Forms::Button());
 			this->buttonwyplac = (gcnew System::Windows::Forms::Button());
+			this->labelsaldo = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// labelstronaglowna
@@ -218,11 +223,21 @@ namespace ProjectPI2 {
 			this->buttonwyplac->UseVisualStyleBackColor = true;
 			this->buttonwyplac->Click += gcnew System::EventHandler(this, &dashboard::buttonwyplac_Click);
 			// 
+			// labelsaldo
+			// 
+			this->labelsaldo->Location = System::Drawing::Point(306, 171);
+			this->labelsaldo->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
+			this->labelsaldo->Name = L"labelsaldo";
+			this->labelsaldo->Size = System::Drawing::Size(173, 20);
+			this->labelsaldo->TabIndex = 12;
+			this->labelsaldo->Text = L"danesaldo";
+			// 
 			// dashboard
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 20);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(818, 676);
+			this->Controls->Add(this->labelsaldo);
 			this->Controls->Add(this->buttonwyplac);
 			this->Controls->Add(this->buttonwplac);
 			this->Controls->Add(this->buttonprzelew);
@@ -249,32 +264,48 @@ namespace ProjectPI2 {
 		}
 	public:
 		void OpenLoginForm() {
+			try {
+				login = gcnew LoginForm();
+				this->Visible = false;
+				login->ShowDialog();
+				this->Visible = true;
 
-			this->Visible = false;
-			login->ShowDialog();
-			//	user = login->user;
-			this->Visible = true;
+				labelwelcome->Text = "Witaj, " + user->username;
+				labelid->Text = "id= " + user->id;
+				labelusername->Text = "username= " + user->username;
+				labelemail->Text = "email= " + user->email;
+				labelpesel->Text = "pesel= " + user->pesel;
+				labeladdress->Text = "adres= " + user->address;
+				labelsaldo->Text = "saldo= " + user->saldo;
+			} 
+			catch(Exception^ e) {
+				if (e->Message == "exit") { 
+					Application::Exit();
+					return; 
+				}
+
+				throw e;
+			}
 		}
 		void OpenWplacForm() {
-			wplac=gcnew WplacForm();
+		
 			wplac->ShowDialog();
+			labelsaldo->Text = "saldo= " + user->saldo;
 		}
 		void OpenWyplacForm() {
-
 			wyplac->ShowDialog();
+			labelsaldo->Text = "saldo= " + user->saldo;
 		}
 		void OpenPrzelejForm() {
-
-			//jakos ten setuser tu musi byc bo inaczej nie dziala
 			przelej->ShowDialog();
+			labelsaldo->Text = "saldo= " + user->saldo;
 		}	
 #pragma endregion
-	private: System::Void buttonEXIT_Click(System::Object^ sender, System::EventArgs^ e) {
-		Application::Exit();
-	}
-	private: System::Void buttonLogout_Click(System::Object^ sender, System::EventArgs^ e) {
-		OpenLoginForm();
-
+private: System::Void buttonEXIT_Click(System::Object^ sender, System::EventArgs^ e) {
+	Application::Exit();
+}
+private: System::Void buttonLogout_Click(System::Object^ sender, System::EventArgs^ e) {
+	OpenLoginForm();
 }
 private: System::Void dashboard_Load(System::Object^ sender, System::EventArgs^ e) {
 		OpenLoginForm();

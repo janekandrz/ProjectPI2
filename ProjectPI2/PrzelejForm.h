@@ -1,3 +1,6 @@
+#include"user.h"
+#include <stdio.h>
+
 #pragma once
 
 namespace ProjectPI2 {
@@ -8,6 +11,7 @@ namespace ProjectPI2 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Data::SqlClient;
 
 	/// <summary>
 	/// Podsumowanie informacji o PrzelejForm
@@ -38,8 +42,10 @@ namespace ProjectPI2 {
 	private: System::Windows::Forms::Button^ buttonCancel;
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::TextBox^ textBox2;
+	private: System::Windows::Forms::TextBox^ TBodbiorca;
+	private: System::Windows::Forms::TextBox^ TBkwota;
+
+
 	private: System::Windows::Forms::Label^ label3;
 	protected:
 
@@ -63,8 +69,8 @@ namespace ProjectPI2 {
 			this->buttonCancel = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->TBodbiorca = (gcnew System::Windows::Forms::TextBox());
+			this->TBkwota = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
@@ -76,6 +82,7 @@ namespace ProjectPI2 {
 			this->buttonOK->TabIndex = 0;
 			this->buttonOK->Text = L"OK";
 			this->buttonOK->UseVisualStyleBackColor = true;
+			this->buttonOK->Click += gcnew System::EventHandler(this, &PrzelejForm::buttonOK_Click);
 			// 
 			// buttonCancel
 			// 
@@ -105,19 +112,19 @@ namespace ProjectPI2 {
 			this->label2->TabIndex = 3;
 			this->label2->Text = L"kwota ";
 			// 
-			// textBox1
+			// TBodbiorca
 			// 
-			this->textBox1->Location = System::Drawing::Point(16, 89);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(463, 22);
-			this->textBox1->TabIndex = 4;
+			this->TBodbiorca->Location = System::Drawing::Point(16, 89);
+			this->TBodbiorca->Name = L"TBodbiorca";
+			this->TBodbiorca->Size = System::Drawing::Size(463, 22);
+			this->TBodbiorca->TabIndex = 4;
 			// 
-			// textBox2
+			// TBkwota
 			// 
-			this->textBox2->Location = System::Drawing::Point(13, 137);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(466, 22);
-			this->textBox2->TabIndex = 5;
+			this->TBkwota->Location = System::Drawing::Point(13, 137);
+			this->TBkwota->Name = L"TBkwota";
+			this->TBkwota->Size = System::Drawing::Size(466, 22);
+			this->TBkwota->TabIndex = 5;
 			// 
 			// label3
 			// 
@@ -136,8 +143,8 @@ namespace ProjectPI2 {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(491, 259);
 			this->Controls->Add(this->label3);
-			this->Controls->Add(this->textBox2);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->TBkwota);
+			this->Controls->Add(this->TBodbiorca);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->buttonCancel);
@@ -146,16 +153,58 @@ namespace ProjectPI2 {
 			this->MinimumSize = System::Drawing::Size(509, 306);
 			this->Name = L"PrzelejForm";
 			this->Text = L"  ";
-			this->Load += gcnew System::EventHandler(this, &PrzelejForm::PrzelejForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void PrzelejForm_Load(System::Object^ sender, System::EventArgs^ e) {
-	}
-	private: System::Void buttonCancel_Click(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void buttonCancel_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Close();
+}
+private: System::Void buttonOK_Click(System::Object^ sender, System::EventArgs^ e) {
+	String^ newkwota = this->TBkwota->Text;
+	String^ newodbiorca = this->TBodbiorca->Text;
+	if (newkwota == "") {
+		MessageBox::Show("Wprowadz kwote");
+	}
+	else if(newodbiorca == "") {
+		MessageBox::Show("Wprowadz odbiorce");
+	}
+	
+	else {
+		int id_rec = Convert::ToInt32(newodbiorca);
+		int kwota = Convert::ToInt32(newkwota);
+		if (kwota < 0) {
+			MessageBox::Show("Wprowadz dodatnia kwote");
+		}
+		else if (kwota > User::saldo) {
+			MessageBox::Show("Nie masz tyle srodkow");
+		}
+		else if (id_rec == User::id) {
+			MessageBox::Show("Nie mozesz przelac samemu sobie");
+		}
+		else {
+			String^ constring = "Data Source=localhost\\sqlexpress;Initial Catalog=dane;Integrated Security=True";			SqlConnection^ conDataBase = gcnew SqlConnection(constring);
+			String^ query = "BEGIN TRANSACTION; " +
+							"UPDATE Users SET Saldo = Saldo - @kwota WHERE id = @id1; " +
+							"UPDATE Users SET Saldo = Saldo + @kwota WHERE id = @id2; " +
+							"COMMIT;";			SqlCommand^ cmdDataBase = gcnew SqlCommand(query, conDataBase);
+			cmdDataBase->Parameters->AddWithValue("@kwota", kwota);
+			cmdDataBase->Parameters->AddWithValue("@id1", User::id);
+			cmdDataBase->Parameters->AddWithValue("@id2", id_rec);
+		
+			SqlDataReader^ myReader;
+			try {
+				conDataBase->Open();
+				myReader = cmdDataBase->ExecuteReader();
+				User:: saldo -= kwota;
+				MessageBox::Show("Przelano");
+				this->Close();
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show(ex->Message);
+			}
+		}	}
 }
 };
 }

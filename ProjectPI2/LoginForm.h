@@ -1,6 +1,7 @@
 #pragma once
 #include"user.h"
-#include"dashboard.h"
+#include"RegisterForm.h"
+
 namespace ProjectPI2 {
 
 	using namespace System;
@@ -17,9 +18,28 @@ namespace ProjectPI2 {
 	public ref class LoginForm : public System::Windows::Forms::Form
 	{
 	public:
+
+		RegisterForm^ reg;
+
+		void OpenRegisterForm() {
+			try{
+			reg = gcnew RegisterForm();
+			this->Visible = false;
+			reg->ShowDialog();
+			this->Visible = true;
+			}
+			catch (Exception^ e) {
+				if (e->Message == "exit") {
+					Application::Exit();
+					return;
+				}
+				throw e;
+			}
+		}
 		User^ user;
-		LoginForm(void)
+		LoginForm()
 		{
+			
 			InitializeComponent();
 			//
 			//TODO: W tym miejscu dodaj kod konstruktora
@@ -44,6 +64,7 @@ namespace ProjectPI2 {
 	private: System::Windows::Forms::Label^ labelpassword;
 	private: System::Windows::Forms::TextBox^ tbusername;
 	private: System::Windows::Forms::TextBox^ tbpassword;
+	private: System::Windows::Forms::Button^ buttonRegister;
 	protected:
 
 	protected:
@@ -69,6 +90,7 @@ namespace ProjectPI2 {
 			this->labelpassword = (gcnew System::Windows::Forms::Label());
 			this->tbusername = (gcnew System::Windows::Forms::TextBox());
 			this->tbpassword = (gcnew System::Windows::Forms::TextBox());
+			this->buttonRegister = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// buttonOK
@@ -135,11 +157,22 @@ namespace ProjectPI2 {
 			this->tbpassword->Size = System::Drawing::Size(353, 22);
 			this->tbpassword->TabIndex = 6;
 			// 
+			// buttonRegister
+			// 
+			this->buttonRegister->Location = System::Drawing::Point(19, 391);
+			this->buttonRegister->Name = L"buttonRegister";
+			this->buttonRegister->Size = System::Drawing::Size(99, 29);
+			this->buttonRegister->TabIndex = 7;
+			this->buttonRegister->Text = L"Register";
+			this->buttonRegister->UseVisualStyleBackColor = true;
+			this->buttonRegister->Click += gcnew System::EventHandler(this, &LoginForm::buttonRegister_Click);
+			// 
 			// LoginForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(462, 433);
+			this->Controls->Add(this->buttonRegister);
 			this->Controls->Add(this->tbpassword);
 			this->Controls->Add(this->tbusername);
 			this->Controls->Add(this->labelpassword);
@@ -156,13 +189,6 @@ namespace ProjectPI2 {
 
 		}
 #pragma endregion
-
-	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
-	}
-	private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
-	}
-
-
 	private: System::Void buttonOK_Click(System::Object^ sender, System::EventArgs^ e) {
 		String^ username = this->tbusername->Text;
 		String^ password = this->tbpassword->Text;
@@ -184,15 +210,16 @@ namespace ProjectPI2 {
 
 			SqlDataReader^ reader = command.ExecuteReader();
 			if (reader->Read()) {
-				user = gcnew User;
-				user->id = reader->GetInt32(0);
+				int argID=user->id = reader->GetInt32(0);
 				user->username = reader->GetString(1);
 				user->email = reader->GetString(2);
 				user->pesel = reader->GetString(3);
 				user->address = reader->GetString(5);
 				user->password = reader->GetString(4);
-
+				user->saldo = reader->GetDouble(6);
+				
 				this->Close();
+				
 			}
 			else {
 				MessageBox::Show("username lub password nieprawidlowe"),
@@ -205,14 +232,13 @@ namespace ProjectPI2 {
 			MessageBox::Show("error w polaczeniu do bazy danych" + e->Message),
 				MessageBoxButtons::OK;
 		}
-
-
-
 	}
 	private: System::Void buttonCancel_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->Close();
+		throw gcnew Exception("exit");
 	}
-	
+	private: System::Void buttonRegister_Click(System::Object^ sender, System::EventArgs^ e) {
+		OpenRegisterForm();
+}
 };
 }
 

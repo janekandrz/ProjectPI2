@@ -4,11 +4,35 @@ using namespace System;
 
 public ref class User {
 public:
-	int id;
+	static int id;
 	static String^ username;
 	static String^ email;
 	static String^ password;
 	static String^ pesel;
 	static String^ address;
-	float saldo;
+	static double saldo;
+
+	User(){
+		User::id = id;
+		User::username = username;
+		User::email = email;
+		User::password = password;
+		User::pesel = pesel;
+		User::address = address;
+		User::saldo = saldo;
+	}
+
+	User(int arg_id, String^ arg_username, String^ arg_email, String^ arg_password, String^ arg_pesel, String^ arg_address, double arg_saldo){
+		User::id = arg_id;
+		User::username = arg_username;
+		User::email = arg_email;
+		User::password = arg_password;
+		User::pesel = arg_pesel;
+		User::address = arg_address;
+		User::saldo = arg_saldo;
+	}
+
+	void setEmail(String^ arg_id){
+		User::email = arg_id;
+	}
 };

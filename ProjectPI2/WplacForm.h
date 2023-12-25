@@ -21,15 +21,15 @@ namespace ProjectPI2 {
 	public ref class WplacForm : public System::Windows::Forms::Form
 	{
 	public:
-		static User^ currentUser;
+		
 		WplacForm(void)
 		{
 			InitializeComponent();
 		}
 
-		void SetUser(User^ user) {
+		/*void SetUser(User^ user) {
 			currentUser = user;
-		};
+		};*/
 	protected:
 		/// <summary>
 		/// Wyczyœæ wszystkie u¿ywane zasoby.
@@ -145,23 +145,30 @@ namespace ProjectPI2 {
 			MessageBox::Show("Wprowadz kwote");
 		}
 		else {
-			SqlConnection^ con= gcnew SqlConnection();
-			con->ConnectionString = "Data Source=localhost\\sqlexpress;Initial Catalog=dane;Integrated Security=True";
-			con->Open();
-			SqlCommand^ cmd = gcnew SqlCommand();
-		  	cmd->Connection = con;
-			cmd->CommandText = "UPDATE Konto SET Saldo = Saldo + @kwota WHERE ID_Konta = @ID";
-			cmd->Parameters->AddWithValue("@kwota", newkwota);
-			cmd->Parameters->AddWithValue("@ID", WplacForm::currentUser->id);
-			int rowsAffected=cmd->ExecuteNonQuery();
-			if (rowsAffected > 0) {
-				MessageBox::Show("pomyslnie wplacono");
+			int kwota = Convert::ToInt32(newkwota);
+			if (kwota < 0) {
+				MessageBox::Show("Wprowadz dodatnia kwote");
 			}
 			else {
-				MessageBox::Show("Nie udalo sie wplacic");
+				String^ constring = "Data Source=localhost\\sqlexpress;Initial Catalog=dane;Integrated Security=True";
+
+				SqlConnection^ conDataBase = gcnew SqlConnection(constring);
+				SqlCommand^ cmdDataBase = gcnew SqlCommand("update Users set Saldo=Saldo+@kwota where id=@id;", conDataBase);
+				cmdDataBase->Parameters->AddWithValue("@kwota", kwota);
+				cmdDataBase->Parameters->AddWithValue("@id", User::id);
+				SqlDataReader^ myReader;
+				try {
+					conDataBase->Open();
+					myReader = cmdDataBase->ExecuteReader();
+					User:: saldo += kwota;
+					MessageBox::Show("Wplacono");
+					this->Close();
+				}
+				catch (Exception^ ex) {
+					MessageBox::Show(ex->Message);
+				}
 			}
-			con->Close();
-			this->Close();
+
 		}
 	}
 	};
