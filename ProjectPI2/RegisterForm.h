@@ -9,6 +9,7 @@ namespace ProjectPI2 {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Data::SqlClient;
+	using namespace System::Net::Mail;
 
 	/// <summary>
 	/// Podsumowanie informacji o RegisterForm
@@ -16,6 +17,25 @@ namespace ProjectPI2 {
 	public ref class RegisterForm : public System::Windows::Forms::Form
 	{
 	public:
+		bool IsValidEmail(System::String^ email)
+		{
+			System::Text::RegularExpressions::Regex^ emailRegex = gcnew System::Text::RegularExpressions::Regex(
+				"(\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*)"
+			);
+			return emailRegex->IsMatch(email);
+		}
+
+		bool IsDigitsOnly(String^ arg_pesel)
+		{
+				for each(char c in arg_pesel)
+				{
+					if (c < '0' || c > '9')
+						return false;
+				}
+
+				return true;
+		}
+
 		RegisterForm(void)
 		{
 			InitializeComponent();
@@ -282,6 +302,18 @@ private: System::Void buttonOK_Click(System::Object^ sender, System::EventArgs^ 
 	}
 	else if (email != email2) {
 		MessageBox::Show("Niezgodny email"), MessageBoxButtons::OK;
+		return;
+	}
+	else if(pesel->Length!=11) {
+		MessageBox::Show("Niepoprawny pesel"), MessageBoxButtons::OK;
+		return;
+	}
+	else if(IsValidEmail(email)==false) {
+		MessageBox::Show("Niepoprawny email"), MessageBoxButtons::OK;
+		return;
+	}
+	else if (IsDigitsOnly(pesel) == false) {
+		MessageBox::Show("Pesel musi skladac sie z samych cyfr"), MessageBoxButtons::OK;
 		return;
 	}
 	try {
