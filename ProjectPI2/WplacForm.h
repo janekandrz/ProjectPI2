@@ -44,9 +44,11 @@ namespace ProjectPI2 {
 	private: System::Windows::Forms::Button^ buttonCancel;
 	protected:
 	private: System::Windows::Forms::Button^ buttonOK;
-	private: System::Windows::Forms::Label^ labelKwota;
+
 	private: System::Windows::Forms::TextBox^ TBkwota;
 	private: System::Windows::Forms::Label^ Wyp³aæ;
+	private: System::Windows::Forms::Panel^ panel2;
+	private: System::Windows::Forms::PictureBox^ pictureBox2;
 
 
 
@@ -66,16 +68,20 @@ namespace ProjectPI2 {
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(WplacForm::typeid));
 			this->buttonCancel = (gcnew System::Windows::Forms::Button());
 			this->buttonOK = (gcnew System::Windows::Forms::Button());
-			this->labelKwota = (gcnew System::Windows::Forms::Label());
 			this->TBkwota = (gcnew System::Windows::Forms::TextBox());
 			this->Wyp³aæ = (gcnew System::Windows::Forms::Label());
+			this->panel2 = (gcnew System::Windows::Forms::Panel());
+			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// buttonCancel
 			// 
-			this->buttonCancel->Location = System::Drawing::Point(376, 185);
+			this->buttonCancel->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->buttonCancel->ForeColor = System::Drawing::Color::White;
+			this->buttonCancel->Location = System::Drawing::Point(376, 181);
 			this->buttonCancel->Name = L"buttonCancel";
-			this->buttonCancel->Size = System::Drawing::Size(75, 23);
+			this->buttonCancel->Size = System::Drawing::Size(75, 27);
 			this->buttonCancel->TabIndex = 0;
 			this->buttonCancel->Text = L"Cancel";
 			this->buttonCancel->UseVisualStyleBackColor = true;
@@ -83,55 +89,82 @@ namespace ProjectPI2 {
 			// 
 			// buttonOK
 			// 
-			this->buttonOK->Location = System::Drawing::Point(297, 185);
+			this->buttonOK->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(66)), static_cast<System::Int32>(static_cast<System::Byte>(214)),
+				static_cast<System::Int32>(static_cast<System::Byte>(234)));
+			this->buttonOK->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->buttonOK->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(34)), static_cast<System::Int32>(static_cast<System::Byte>(36)),
+				static_cast<System::Int32>(static_cast<System::Byte>(49)));
+			this->buttonOK->Location = System::Drawing::Point(282, 181);
 			this->buttonOK->Name = L"buttonOK";
-			this->buttonOK->Size = System::Drawing::Size(75, 23);
+			this->buttonOK->Size = System::Drawing::Size(75, 27);
 			this->buttonOK->TabIndex = 1;
 			this->buttonOK->Text = L"OK";
-			this->buttonOK->UseVisualStyleBackColor = true;
+			this->buttonOK->UseVisualStyleBackColor = false;
 			this->buttonOK->Click += gcnew System::EventHandler(this, &WplacForm::buttonOK_Click);
-			// 
-			// labelKwota
-			// 
-			this->labelKwota->AutoSize = true;
-			this->labelKwota->Location = System::Drawing::Point(9, 78);
-			this->labelKwota->Name = L"labelKwota";
-			this->labelKwota->Size = System::Drawing::Size(46, 16);
-			this->labelKwota->TabIndex = 2;
-			this->labelKwota->Text = L"Kwota ";
 			// 
 			// TBkwota
 			// 
-			this->TBkwota->Location = System::Drawing::Point(12, 97);
+			this->TBkwota->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(34)), static_cast<System::Int32>(static_cast<System::Byte>(36)),
+				static_cast<System::Int32>(static_cast<System::Byte>(49)));
+			this->TBkwota->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->TBkwota->ForeColor = System::Drawing::Color::White;
+			this->TBkwota->Location = System::Drawing::Point(77, 97);
 			this->TBkwota->Name = L"TBkwota";
-			this->TBkwota->Size = System::Drawing::Size(439, 22);
+			this->TBkwota->Size = System::Drawing::Size(374, 15);
 			this->TBkwota->TabIndex = 3;
+			this->TBkwota->Text = L"Kwota wp³aty";
+			this->TBkwota->Click += gcnew System::EventHandler(this, &WplacForm::TBkwota_Click);
 			// 
 			// Wyp³aæ
 			// 
 			this->Wyp³aæ->AutoSize = true;
+			this->Wyp³aæ->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(34)), static_cast<System::Int32>(static_cast<System::Byte>(36)),
+				static_cast<System::Int32>(static_cast<System::Byte>(49)));
 			this->Wyp³aæ->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->Wyp³aæ->Location = System::Drawing::Point(180, 31);
+			this->Wyp³aæ->ForeColor = System::Drawing::Color::White;
+			this->Wyp³aæ->Location = System::Drawing::Point(192, 28);
 			this->Wyp³aæ->Name = L"Wyp³aæ";
 			this->Wyp³aæ->Size = System::Drawing::Size(80, 29);
 			this->Wyp³aæ->TabIndex = 4;
 			this->Wyp³aæ->Text = L"Wp³aæ";
 			// 
+			// panel2
+			// 
+			this->panel2->BackColor = System::Drawing::Color::White;
+			this->panel2->Location = System::Drawing::Point(77, 118);
+			this->panel2->Name = L"panel2";
+			this->panel2->Size = System::Drawing::Size(350, 1);
+			this->panel2->TabIndex = 11;
+			// 
+			// pictureBox2
+			// 
+			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
+			this->pictureBox2->Location = System::Drawing::Point(21, 82);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(50, 46);
+			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox2->TabIndex = 10;
+			this->pictureBox2->TabStop = false;
+			// 
 			// WplacForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(34)), static_cast<System::Int32>(static_cast<System::Byte>(36)),
+				static_cast<System::Int32>(static_cast<System::Byte>(49)));
 			this->ClientSize = System::Drawing::Size(463, 227);
+			this->Controls->Add(this->panel2);
+			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->Wyp³aæ);
 			this->Controls->Add(this->TBkwota);
-			this->Controls->Add(this->labelKwota);
 			this->Controls->Add(this->buttonOK);
 			this->Controls->Add(this->buttonCancel);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximumSize = System::Drawing::Size(481, 274);
 			this->MinimumSize = System::Drawing::Size(481, 274);
 			this->Name = L"WplacForm";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -172,5 +205,8 @@ namespace ProjectPI2 {
 
 		}
 	}
-	};
+	private: System::Void TBkwota_Click(System::Object^ sender, System::EventArgs^ e) {
+		TBkwota->Clear();
+	}
+};
 }
