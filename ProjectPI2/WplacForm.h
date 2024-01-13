@@ -63,6 +63,7 @@ namespace ProjectPI2 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(WplacForm::typeid));
 			this->buttonCancel = (gcnew System::Windows::Forms::Button());
 			this->buttonOK = (gcnew System::Windows::Forms::Button());
 			this->labelKwota = (gcnew System::Windows::Forms::Label());
@@ -112,8 +113,8 @@ namespace ProjectPI2 {
 			this->Wyp³aæ->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
 			this->Wyp³aæ->Location = System::Drawing::Point(180, 31);
-			this->Wyp³aæ->Name = L"Wp³aæ";
-			this->Wyp³aæ->Size = System::Drawing::Size(91, 29);
+			this->Wyp³aæ->Name = L"Wyp³aæ";
+			this->Wyp³aæ->Size = System::Drawing::Size(80, 29);
 			this->Wyp³aæ->TabIndex = 4;
 			this->Wyp³aæ->Text = L"Wp³aæ";
 			// 
@@ -127,10 +128,10 @@ namespace ProjectPI2 {
 			this->Controls->Add(this->labelKwota);
 			this->Controls->Add(this->buttonOK);
 			this->Controls->Add(this->buttonCancel);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximumSize = System::Drawing::Size(481, 274);
 			this->MinimumSize = System::Drawing::Size(481, 274);
 			this->Name = L"WplacForm";
-			this->Text = L"WplacForm";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 

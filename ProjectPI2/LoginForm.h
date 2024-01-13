@@ -2,6 +2,7 @@
 #include"user.h"
 #include"RegisterForm.h"
 
+
 namespace ProjectPI2 {
 
 	using namespace System;
@@ -36,6 +37,8 @@ namespace ProjectPI2 {
 				throw e;
 			}
 		}
+	private: System::Windows::Forms::Label^ label1;
+	public:
 		User^ user;
 		LoginForm()
 		{
@@ -83,6 +86,7 @@ namespace ProjectPI2 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(LoginForm::typeid));
 			this->buttonOK = (gcnew System::Windows::Forms::Button());
 			this->buttonCancel = (gcnew System::Windows::Forms::Button());
 			this->labelLogin = (gcnew System::Windows::Forms::Label());
@@ -91,87 +95,104 @@ namespace ProjectPI2 {
 			this->tbusername = (gcnew System::Windows::Forms::TextBox());
 			this->tbpassword = (gcnew System::Windows::Forms::TextBox());
 			this->buttonRegister = (gcnew System::Windows::Forms::Button());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// buttonOK
 			// 
-			this->buttonOK->Location = System::Drawing::Point(297, 397);
+			this->buttonOK->Location = System::Drawing::Point(57, 371);
 			this->buttonOK->Name = L"buttonOK";
-			this->buttonOK->Size = System::Drawing::Size(75, 23);
+			this->buttonOK->Size = System::Drawing::Size(295, 31);
 			this->buttonOK->TabIndex = 0;
-			this->buttonOK->Text = L"OK";
+			this->buttonOK->Text = L"Login";
 			this->buttonOK->UseVisualStyleBackColor = true;
 			this->buttonOK->Click += gcnew System::EventHandler(this, &LoginForm::buttonOK_Click);
 			// 
 			// buttonCancel
 			// 
-			this->buttonCancel->Location = System::Drawing::Point(378, 397);
+			this->buttonCancel->Location = System::Drawing::Point(302, 541);
 			this->buttonCancel->Name = L"buttonCancel";
-			this->buttonCancel->Size = System::Drawing::Size(75, 23);
+			this->buttonCancel->Size = System::Drawing::Size(94, 30);
 			this->buttonCancel->TabIndex = 1;
-			this->buttonCancel->Text = L"Cancel";
+			this->buttonCancel->Text = L"EXIT";
 			this->buttonCancel->UseVisualStyleBackColor = true;
 			this->buttonCancel->Click += gcnew System::EventHandler(this, &LoginForm::buttonCancel_Click);
 			// 
 			// labelLogin
 			// 
 			this->labelLogin->AutoSize = true;
-			this->labelLogin->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labelLogin->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->labelLogin->Location = System::Drawing::Point(191, 35);
+			this->labelLogin->Location = System::Drawing::Point(160, 68);
 			this->labelLogin->Name = L"labelLogin";
-			this->labelLogin->Size = System::Drawing::Size(73, 29);
+			this->labelLogin->Size = System::Drawing::Size(85, 32);
 			this->labelLogin->TabIndex = 2;
 			this->labelLogin->Text = L"Login";
 			// 
 			// labelusername
 			// 
 			this->labelusername->AutoSize = true;
-			this->labelusername->Location = System::Drawing::Point(16, 118);
+			this->labelusername->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->labelusername->Location = System::Drawing::Point(12, 165);
 			this->labelusername->Name = L"labelusername";
-			this->labelusername->Size = System::Drawing::Size(67, 16);
+			this->labelusername->Size = System::Drawing::Size(104, 25);
 			this->labelusername->TabIndex = 3;
 			this->labelusername->Text = L"username";
 			// 
 			// labelpassword
 			// 
 			this->labelpassword->AutoSize = true;
-			this->labelpassword->Location = System::Drawing::Point(16, 178);
+			this->labelpassword->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->labelpassword->Location = System::Drawing::Point(12, 254);
 			this->labelpassword->Name = L"labelpassword";
-			this->labelpassword->Size = System::Drawing::Size(66, 16);
+			this->labelpassword->Size = System::Drawing::Size(101, 25);
 			this->labelpassword->TabIndex = 4;
 			this->labelpassword->Text = L"password";
 			// 
 			// tbusername
 			// 
-			this->tbusername->Location = System::Drawing::Point(100, 118);
+			this->tbusername->Location = System::Drawing::Point(12, 190);
 			this->tbusername->Name = L"tbusername";
-			this->tbusername->Size = System::Drawing::Size(353, 22);
+			this->tbusername->Size = System::Drawing::Size(380, 23);
 			this->tbusername->TabIndex = 5;
 			// 
 			// tbpassword
 			// 
-			this->tbpassword->Location = System::Drawing::Point(100, 178);
+			this->tbpassword->Location = System::Drawing::Point(16, 279);
 			this->tbpassword->Name = L"tbpassword";
 			this->tbpassword->PasswordChar = '*';
-			this->tbpassword->Size = System::Drawing::Size(353, 22);
+			this->tbpassword->Size = System::Drawing::Size(380, 23);
 			this->tbpassword->TabIndex = 6;
 			// 
 			// buttonRegister
 			// 
-			this->buttonRegister->Location = System::Drawing::Point(19, 391);
+			this->buttonRegister->Location = System::Drawing::Point(57, 460);
 			this->buttonRegister->Name = L"buttonRegister";
-			this->buttonRegister->Size = System::Drawing::Size(99, 29);
+			this->buttonRegister->Size = System::Drawing::Size(295, 34);
 			this->buttonRegister->TabIndex = 7;
 			this->buttonRegister->Text = L"Register";
 			this->buttonRegister->UseVisualStyleBackColor = true;
 			this->buttonRegister->Click += gcnew System::EventHandler(this, &LoginForm::buttonRegister_Click);
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->label1->Location = System::Drawing::Point(189, 425);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(24, 20);
+			this->label1->TabIndex = 8;
+			this->label1->Text = L"or";
+			// 
 			// LoginForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 17);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(462, 433);
+			this->ClientSize = System::Drawing::Size(401, 582);
+			this->Controls->Add(this->label1);
 			this->Controls->Add(this->buttonRegister);
 			this->Controls->Add(this->tbpassword);
 			this->Controls->Add(this->tbusername);
@@ -180,10 +201,9 @@ namespace ProjectPI2 {
 			this->Controls->Add(this->labelLogin);
 			this->Controls->Add(this->buttonCancel);
 			this->Controls->Add(this->buttonOK);
-			this->MaximumSize = System::Drawing::Size(480, 480);
-			this->MinimumSize = System::Drawing::Size(480, 480);
+			this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"LoginForm";
-			this->Text = L"LoginForm";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -210,13 +230,15 @@ namespace ProjectPI2 {
 
 			SqlDataReader^ reader = command.ExecuteReader();
 			if (reader->Read()) {
-				int argID=user->id = reader->GetInt32(0);
+				user->id = reader->GetInt32(0);
 				user->username = reader->GetString(1);
 				user->email = reader->GetString(2);
 				user->pesel = reader->GetString(3);
 				user->address = reader->GetString(5);
 				user->password = reader->GetString(4);
 				user->saldo = reader->GetDouble(6);
+				user->nr = reader->GetInt32(7);
+				
 				
 				this->Close();
 				
@@ -234,7 +256,8 @@ namespace ProjectPI2 {
 		}
 	}
 	private: System::Void buttonCancel_Click(System::Object^ sender, System::EventArgs^ e) {
-		throw gcnew Exception("exit");
+		Application::Exit();
+		this->Close();
 	}
 	private: System::Void buttonRegister_Click(System::Object^ sender, System::EventArgs^ e) {
 		OpenRegisterForm();

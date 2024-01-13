@@ -59,6 +59,7 @@ namespace ProjectPI2 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(WyplacForm::typeid));
 			this->buttonCancel = (gcnew System::Windows::Forms::Button());
 			this->buttonOK = (gcnew System::Windows::Forms::Button());
 			this->labelKwota = (gcnew System::Windows::Forms::Label());
@@ -123,10 +124,11 @@ namespace ProjectPI2 {
 			this->Controls->Add(this->labelKwota);
 			this->Controls->Add(this->buttonOK);
 			this->Controls->Add(this->buttonCancel);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximumSize = System::Drawing::Size(481, 274);
 			this->MinimumSize = System::Drawing::Size(481, 274);
 			this->Name = L"WyplacForm";
-			this->Text = L"WyplacForm";
+			this->Text = L"  ";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 

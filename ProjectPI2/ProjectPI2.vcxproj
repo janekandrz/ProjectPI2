@@ -163,6 +163,9 @@
     <EmbeddedResource Include="RegisterForm.resx">
       <DependentUpon>RegisterForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WplacForm.resx">
+      <DependentUpon>WplacForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WyplacForm.resx">
       <DependentUpon>WyplacForm.h</DependentUpon>
     </EmbeddedResource>

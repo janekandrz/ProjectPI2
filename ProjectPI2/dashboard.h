@@ -26,6 +26,9 @@ namespace ProjectPI2 {
 		LoginForm^ login;
 		WyplacForm^ wyplac;
 		WplacForm^ wplac;
+	private: System::Windows::Forms::Label^ labelnr;
+	private: System::Windows::Forms::Panel^ panel1;
+	public:
 		PrzelejForm^ przelej;
 	
 	public:
@@ -37,7 +40,6 @@ namespace ProjectPI2 {
 			//
 
 			labelwelcome->Text = "Witaj, " + user->username;
-			labelid->Text = "id= " + user->id;
 			labelusername->Text = "username= " + user->username;
 			labelemail->Text = "email= " + user->email;
 			labelpesel->Text = "pesel= " + user->pesel;
@@ -63,7 +65,7 @@ namespace ProjectPI2 {
 		}
 	private: System::Windows::Forms::Label^ labelsaldo;
 	private: System::Windows::Forms::Label^ labelstronaglowna;
-	private: System::Windows::Forms::Label^ labelid;
+
 	private: System::Windows::Forms::Label^ labelusername;
 	private: System::Windows::Forms::Label^ labelemail;
 	private: System::Windows::Forms::Label^ labelpesel;
@@ -91,8 +93,8 @@ namespace ProjectPI2 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(dashboard::typeid));
 			this->labelstronaglowna = (gcnew System::Windows::Forms::Label());
-			this->labelid = (gcnew System::Windows::Forms::Label());
 			this->labelusername = (gcnew System::Windows::Forms::Label());
 			this->labelemail = (gcnew System::Windows::Forms::Label());
 			this->labelpesel = (gcnew System::Windows::Forms::Label());
@@ -104,6 +106,9 @@ namespace ProjectPI2 {
 			this->buttonwplac = (gcnew System::Windows::Forms::Button());
 			this->buttonwyplac = (gcnew System::Windows::Forms::Button());
 			this->labelsaldo = (gcnew System::Windows::Forms::Label());
+			this->labelnr = (gcnew System::Windows::Forms::Label());
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// labelstronaglowna
@@ -111,27 +116,18 @@ namespace ProjectPI2 {
 			this->labelstronaglowna->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(238)));
 			this->labelstronaglowna->ImageAlign = System::Drawing::ContentAlignment::TopLeft;
-			this->labelstronaglowna->Location = System::Drawing::Point(15, 11);
+			this->labelstronaglowna->Location = System::Drawing::Point(407, 9);
 			this->labelstronaglowna->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->labelstronaglowna->Name = L"labelstronaglowna";
-			this->labelstronaglowna->Size = System::Drawing::Size(788, 50);
+			this->labelstronaglowna->Size = System::Drawing::Size(185, 50);
 			this->labelstronaglowna->TabIndex = 0;
 			this->labelstronaglowna->Text = L"Strona g³ówna ";
 			this->labelstronaglowna->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
-			// labelid
-			// 
-			this->labelid->Location = System::Drawing::Point(16, 151);
-			this->labelid->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
-			this->labelid->Name = L"labelid";
-			this->labelid->Size = System::Drawing::Size(786, 20);
-			this->labelid->TabIndex = 1;
-			this->labelid->Text = L"daneid";
-			// 
 			// labelusername
 			// 
 			this->labelusername->AutoSize = true;
-			this->labelusername->Location = System::Drawing::Point(16, 171);
+			this->labelusername->Location = System::Drawing::Point(252, 338);
 			this->labelusername->Name = L"labelusername";
 			this->labelusername->Size = System::Drawing::Size(119, 20);
 			this->labelusername->TabIndex = 2;
@@ -140,7 +136,7 @@ namespace ProjectPI2 {
 			// labelemail
 			// 
 			this->labelemail->AutoSize = true;
-			this->labelemail->Location = System::Drawing::Point(16, 191);
+			this->labelemail->Location = System::Drawing::Point(252, 385);
 			this->labelemail->Name = L"labelemail";
 			this->labelemail->Size = System::Drawing::Size(85, 20);
 			this->labelemail->TabIndex = 3;
@@ -149,7 +145,7 @@ namespace ProjectPI2 {
 			// labelpesel
 			// 
 			this->labelpesel->AutoSize = true;
-			this->labelpesel->Location = System::Drawing::Point(16, 211);
+			this->labelpesel->Location = System::Drawing::Point(252, 434);
 			this->labelpesel->Name = L"labelpesel";
 			this->labelpesel->Size = System::Drawing::Size(85, 20);
 			this->labelpesel->TabIndex = 4;
@@ -158,7 +154,7 @@ namespace ProjectPI2 {
 			// labeladdress
 			// 
 			this->labeladdress->AutoSize = true;
-			this->labeladdress->Location = System::Drawing::Point(16, 231);
+			this->labeladdress->Location = System::Drawing::Point(252, 487);
 			this->labeladdress->Name = L"labeladdress";
 			this->labeladdress->Size = System::Drawing::Size(87, 20);
 			this->labeladdress->TabIndex = 5;
@@ -167,7 +163,7 @@ namespace ProjectPI2 {
 			// labelwelcome
 			// 
 			this->labelwelcome->AutoSize = true;
-			this->labelwelcome->Location = System::Drawing::Point(358, 51);
+			this->labelwelcome->Location = System::Drawing::Point(446, 59);
 			this->labelwelcome->Name = L"labelwelcome";
 			this->labelwelcome->Size = System::Drawing::Size(80, 20);
 			this->labelwelcome->TabIndex = 6;
@@ -175,118 +171,139 @@ namespace ProjectPI2 {
 			// 
 			// buttonEXIT
 			// 
-			this->buttonEXIT->Location = System::Drawing::Point(715, 632);
+			this->buttonEXIT->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonEXIT.Image")));
+			this->buttonEXIT->Location = System::Drawing::Point(0, 528);
 			this->buttonEXIT->Name = L"buttonEXIT";
-			this->buttonEXIT->Size = System::Drawing::Size(87, 32);
+			this->buttonEXIT->Size = System::Drawing::Size(143, 58);
 			this->buttonEXIT->TabIndex = 7;
 			this->buttonEXIT->Text = L"EXIT";
+			this->buttonEXIT->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageAboveText;
 			this->buttonEXIT->UseVisualStyleBackColor = true;
 			this->buttonEXIT->Click += gcnew System::EventHandler(this, &dashboard::buttonEXIT_Click);
 			// 
 			// buttonLogout
 			// 
-			this->buttonLogout->Location = System::Drawing::Point(616, 632);
+			this->buttonLogout->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonLogout.Image")));
+			this->buttonLogout->Location = System::Drawing::Point(4, 456);
 			this->buttonLogout->Name = L"buttonLogout";
-			this->buttonLogout->Size = System::Drawing::Size(93, 32);
+			this->buttonLogout->Size = System::Drawing::Size(143, 66);
 			this->buttonLogout->TabIndex = 8;
 			this->buttonLogout->Text = L"Logout";
+			this->buttonLogout->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
+			this->buttonLogout->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageAboveText;
 			this->buttonLogout->UseVisualStyleBackColor = true;
 			this->buttonLogout->Click += gcnew System::EventHandler(this, &dashboard::buttonLogout_Click);
 			// 
 			// buttonprzelew
 			// 
-			this->buttonprzelew->Location = System::Drawing::Point(616, 279);
+			this->buttonprzelew->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonprzelew.Image")));
+			this->buttonprzelew->ImageAlign = System::Drawing::ContentAlignment::BottomCenter;
+			this->buttonprzelew->Location = System::Drawing::Point(3, 3);
 			this->buttonprzelew->Name = L"buttonprzelew";
-			this->buttonprzelew->Size = System::Drawing::Size(93, 35);
+			this->buttonprzelew->Size = System::Drawing::Size(140, 84);
 			this->buttonprzelew->TabIndex = 9;
 			this->buttonprzelew->Text = L"przelew";
+			this->buttonprzelew->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageAboveText;
 			this->buttonprzelew->UseVisualStyleBackColor = true;
 			this->buttonprzelew->Click += gcnew System::EventHandler(this, &dashboard::buttonprzelew_Click);
 			// 
 			// buttonwplac
 			// 
-			this->buttonwplac->Location = System::Drawing::Point(616, 320);
+			this->buttonwplac->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonwplac.Image")));
+			this->buttonwplac->Location = System::Drawing::Point(3, 183);
 			this->buttonwplac->Name = L"buttonwplac";
-			this->buttonwplac->Size = System::Drawing::Size(93, 29);
+			this->buttonwplac->Size = System::Drawing::Size(141, 77);
 			this->buttonwplac->TabIndex = 10;
 			this->buttonwplac->Text = L"wp³aæ";
+			this->buttonwplac->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageAboveText;
 			this->buttonwplac->UseVisualStyleBackColor = true;
 			this->buttonwplac->Click += gcnew System::EventHandler(this, &dashboard::buttonwplac_Click);
 			// 
 			// buttonwyplac
 			// 
-			this->buttonwyplac->Location = System::Drawing::Point(616, 355);
+			this->buttonwyplac->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonwyplac.Image")));
+			this->buttonwyplac->Location = System::Drawing::Point(4, 93);
 			this->buttonwyplac->Name = L"buttonwyplac";
-			this->buttonwyplac->Size = System::Drawing::Size(93, 28);
+			this->buttonwyplac->Size = System::Drawing::Size(141, 84);
 			this->buttonwyplac->TabIndex = 11;
 			this->buttonwyplac->Text = L"wyp³aæ";
+			this->buttonwyplac->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
+			this->buttonwyplac->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageAboveText;
 			this->buttonwyplac->UseVisualStyleBackColor = true;
 			this->buttonwyplac->Click += gcnew System::EventHandler(this, &dashboard::buttonwyplac_Click);
 			// 
 			// labelsaldo
 			// 
-			this->labelsaldo->Location = System::Drawing::Point(306, 171);
+			this->labelsaldo->Location = System::Drawing::Point(555, 292);
 			this->labelsaldo->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->labelsaldo->Name = L"labelsaldo";
-			this->labelsaldo->Size = System::Drawing::Size(173, 20);
+			this->labelsaldo->Size = System::Drawing::Size(150, 20);
 			this->labelsaldo->TabIndex = 12;
 			this->labelsaldo->Text = L"danesaldo";
+			// 
+			// labelnr
+			// 
+			this->labelnr->AutoSize = true;
+			this->labelnr->Location = System::Drawing::Point(252, 292);
+			this->labelnr->Name = L"labelnr";
+			this->labelnr->Size = System::Drawing::Size(60, 20);
+			this->labelnr->TabIndex = 13;
+			this->labelnr->Text = L"danenr";
+			// 
+			// panel1
+			// 
+			this->panel1->Controls->Add(this->buttonwyplac);
+			this->panel1->Controls->Add(this->buttonwplac);
+			this->panel1->Controls->Add(this->buttonprzelew);
+			this->panel1->Controls->Add(this->buttonEXIT);
+			this->panel1->Controls->Add(this->buttonLogout);
+			this->panel1->Location = System::Drawing::Point(13, 10);
+			this->panel1->Name = L"panel1";
+			this->panel1->Size = System::Drawing::Size(147, 593);
+			this->panel1->TabIndex = 14;
 			// 
 			// dashboard
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 20);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(818, 676);
+			this->ClientSize = System::Drawing::Size(982, 609);
+			this->Controls->Add(this->panel1);
+			this->Controls->Add(this->labelnr);
 			this->Controls->Add(this->labelsaldo);
-			this->Controls->Add(this->buttonwyplac);
-			this->Controls->Add(this->buttonwplac);
-			this->Controls->Add(this->buttonprzelew);
-			this->Controls->Add(this->buttonLogout);
-			this->Controls->Add(this->buttonEXIT);
 			this->Controls->Add(this->labelwelcome);
 			this->Controls->Add(this->labeladdress);
 			this->Controls->Add(this->labelpesel);
 			this->Controls->Add(this->labelemail);
 			this->Controls->Add(this->labelusername);
-			this->Controls->Add(this->labelid);
 			this->Controls->Add(this->labelstronaglowna);
 			this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::Fixed3D;
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Margin = System::Windows::Forms::Padding(4);
-			this->MaximumSize = System::Drawing::Size(836, 723);
-			this->MinimumSize = System::Drawing::Size(836, 723);
 			this->Name = L"dashboard";
-			this->Text = L"dashboard";
 			this->Load += gcnew System::EventHandler(this, &dashboard::dashboard_Load);
+			this->panel1->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 	public:
 		void OpenLoginForm() {
-			try {
 				login = gcnew LoginForm();
 				this->Visible = false;
 				login->ShowDialog();
 				this->Visible = true;
 
 				labelwelcome->Text = "Witaj, " + user->username;
-				labelid->Text = "id= " + user->id;
 				labelusername->Text = "username= " + user->username;
 				labelemail->Text = "email= " + user->email;
 				labelpesel->Text = "pesel= " + user->pesel;
 				labeladdress->Text = "adres= " + user->address;
 				labelsaldo->Text = "saldo= " + user->saldo;
+				labelnr->Text= "numer konta= "+user->nr;
 			} 
-			catch(Exception^ e) {
-				if (e->Message == "exit") { 
-					Application::Exit();
-					return; 
-				}
 
-				throw e;
-			}
-		}
 		void OpenWplacForm() {
 		
 			wplac->ShowDialog();

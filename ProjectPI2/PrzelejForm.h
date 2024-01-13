@@ -1,5 +1,7 @@
 #include"user.h"
 #include <stdio.h>
+#include <fstream>
+
 
 #pragma once
 
@@ -12,6 +14,7 @@ namespace ProjectPI2 {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Data::SqlClient;
+	using namespace System::Net::Mail;
 
 	/// <summary>
 	/// Podsumowanie informacji o PrzelejForm
@@ -47,6 +50,8 @@ namespace ProjectPI2 {
 
 
 	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::TextBox^ TBtytul;
+	private: System::Windows::Forms::Label^ label4;
 	protected:
 
 	protected:
@@ -72,6 +77,8 @@ namespace ProjectPI2 {
 			this->TBodbiorca = (gcnew System::Windows::Forms::TextBox());
 			this->TBkwota = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->TBtytul = (gcnew System::Windows::Forms::TextBox());
+			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// buttonOK
@@ -106,7 +113,7 @@ namespace ProjectPI2 {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(13, 117);
+			this->label2->Location = System::Drawing::Point(12, 166);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(45, 16);
 			this->label2->TabIndex = 3;
@@ -114,14 +121,14 @@ namespace ProjectPI2 {
 			// 
 			// TBodbiorca
 			// 
-			this->TBodbiorca->Location = System::Drawing::Point(16, 89);
+			this->TBodbiorca->Location = System::Drawing::Point(12, 88);
 			this->TBodbiorca->Name = L"TBodbiorca";
 			this->TBodbiorca->Size = System::Drawing::Size(463, 22);
 			this->TBodbiorca->TabIndex = 4;
 			// 
 			// TBkwota
 			// 
-			this->TBkwota->Location = System::Drawing::Point(13, 137);
+			this->TBkwota->Location = System::Drawing::Point(12, 185);
 			this->TBkwota->Name = L"TBkwota";
 			this->TBkwota->Size = System::Drawing::Size(466, 22);
 			this->TBkwota->TabIndex = 5;
@@ -137,11 +144,29 @@ namespace ProjectPI2 {
 			this->label3->TabIndex = 6;
 			this->label3->Text = L"Przelew";
 			// 
+			// TBtytul
+			// 
+			this->TBtytul->Location = System::Drawing::Point(12, 137);
+			this->TBtytul->Name = L"TBtytul";
+			this->TBtytul->Size = System::Drawing::Size(463, 22);
+			this->TBtytul->TabIndex = 7;
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(13, 118);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(30, 16);
+			this->label4->TabIndex = 8;
+			this->label4->Text = L"tytul";
+			// 
 			// PrzelejForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(491, 259);
+			this->Controls->Add(this->label4);
+			this->Controls->Add(this->TBtytul);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->TBkwota);
 			this->Controls->Add(this->TBodbiorca);
@@ -162,6 +187,7 @@ private: System::Void buttonCancel_Click(System::Object^ sender, System::EventAr
 	this->Close();
 }
 private: System::Void buttonOK_Click(System::Object^ sender, System::EventArgs^ e) {
+	String^ tytul = this->TBtytul->Text;
 	String^ newkwota = this->TBkwota->Text;
 	String^ newodbiorca = this->TBodbiorca->Text;
 	if (newkwota == "") {
@@ -172,7 +198,7 @@ private: System::Void buttonOK_Click(System::Object^ sender, System::EventArgs^ 
 	}
 	
 	else {
-		int id_rec = Convert::ToInt32(newodbiorca);
+		int nr_rec = Convert::ToInt32(newodbiorca);
 		int kwota = Convert::ToInt32(newkwota);
 		if (kwota < 0) {
 			MessageBox::Show("Wprowadz dodatnia kwote");
@@ -180,26 +206,44 @@ private: System::Void buttonOK_Click(System::Object^ sender, System::EventArgs^ 
 		else if (kwota > User::saldo) {
 			MessageBox::Show("Nie masz tyle srodkow");
 		}
-		else if (id_rec == User::id) {
+		else if (nr_rec == User::nr) {
 			MessageBox::Show("Nie mozesz przelac samemu sobie");
 		}
 		else {
-			String^ constring = "Data Source=localhost\\sqlexpress;Initial Catalog=dane;Integrated Security=True";			SqlConnection^ conDataBase = gcnew SqlConnection(constring);
+			String^ constring = "Data Source=localhost\\sqlexpress;Initial Catalog=dane;Integrated Security=True";			
+			SqlConnection^ conDataBase = gcnew SqlConnection(constring);
 			String^ query = "BEGIN TRANSACTION; " +
 							"UPDATE Users SET Saldo = Saldo - @kwota WHERE id = @id1; " +
-							"UPDATE Users SET Saldo = Saldo + @kwota WHERE id = @id2; " +
-							"COMMIT;";			SqlCommand^ cmdDataBase = gcnew SqlCommand(query, conDataBase);
+							"UPDATE Users SET Saldo = Saldo + @kwota WHERE nr = @nr; " +
+							"COMMIT;";
+			SqlCommand^ cmdDataBase = gcnew SqlCommand(query, conDataBase);
 			cmdDataBase->Parameters->AddWithValue("@kwota", kwota);
 			cmdDataBase->Parameters->AddWithValue("@id1", User::id);
-			cmdDataBase->Parameters->AddWithValue("@id2", id_rec);
+			cmdDataBase->Parameters->AddWithValue("@nr", nr_rec);
 		
 			SqlDataReader^ myReader;
 			try {
 				conDataBase->Open();
 				myReader = cmdDataBase->ExecuteReader();
-				User:: saldo -= kwota;
-				MessageBox::Show("Przelano");
-				this->Close();
+
+				if (myReader->RecordsAffected > 0) {
+					User:: saldo -= kwota;
+					this->Close();
+					
+					MailMessage^ mail = gcnew MailMessage();
+					mail->From = gcnew MailAddress(User::email);
+					mail->To->Add(User::email);
+					mail->Subject = "Potwierdzenie przelewu";
+					mail->Body = "Przelew na kwote " + kwota + " zlotych o tytule " + tytul + "na konto " + nr_rec + " zostal zrealizowany";
+					SmtpClient^ klient = gcnew SmtpClient("smtp.gmail.com");
+					klient->Port = 587;
+					klient->Credentials = gcnew System::Net::NetworkCredential("projektbankk@gmail.com", "fgqd ccij kwbk qxrt");
+					klient->EnableSsl = true;
+					klient->Send(mail);
+					MessageBox::Show("Wyslano maila z potweierdzeniem przelewu na ");
+
+					this->Close();
+				}
 			}
 			catch (Exception^ ex) {
 				MessageBox::Show(ex->Message);
