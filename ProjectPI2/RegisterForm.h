@@ -220,7 +220,7 @@ namespace ProjectPI2 {
 			this->TBpassword2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
 			this->TBpassword2->ForeColor = System::Drawing::Color::White;
-			this->TBpassword2->Location = System::Drawing::Point(82, 321);
+			this->TBpassword2->Location = System::Drawing::Point(82, 315);
 			this->TBpassword2->Name = L"TBpassword2";
 			this->TBpassword2->PasswordChar = '*';
 			this->TBpassword2->Size = System::Drawing::Size(384, 17);

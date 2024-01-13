@@ -49,6 +49,7 @@ namespace ProjectPI2 {
 	private: System::Windows::Forms::Label^ Wyp³aæ;
 	private: System::Windows::Forms::Panel^ panel2;
 	private: System::Windows::Forms::PictureBox^ pictureBox2;
+	private: System::Windows::Forms::ComboBox^ comboBox1;
 
 
 
@@ -72,6 +73,7 @@ namespace ProjectPI2 {
 			this->Wyp³aæ = (gcnew System::Windows::Forms::Label());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -134,7 +136,7 @@ namespace ProjectPI2 {
 			this->panel2->BackColor = System::Drawing::Color::White;
 			this->panel2->Location = System::Drawing::Point(77, 118);
 			this->panel2->Name = L"panel2";
-			this->panel2->Size = System::Drawing::Size(350, 1);
+			this->panel2->Size = System::Drawing::Size(250, 1);
 			this->panel2->TabIndex = 11;
 			// 
 			// pictureBox2
@@ -147,6 +149,20 @@ namespace ProjectPI2 {
 			this->pictureBox2->TabIndex = 10;
 			this->pictureBox2->TabStop = false;
 			// 
+			// comboBox1
+			// 
+			this->comboBox1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(32)), static_cast<System::Int32>(static_cast<System::Byte>(34)),
+				static_cast<System::Int32>(static_cast<System::Byte>(49)));
+			this->comboBox1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->comboBox1->ForeColor = System::Drawing::Color::White;
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"PLN ", L"USD", L"EUR" });
+			this->comboBox1->Location = System::Drawing::Point(335, 94);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(116, 24);
+			this->comboBox1->TabIndex = 12;
+			this->comboBox1->Text = L"Waluta";
+			// 
 			// WplacForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -154,6 +170,7 @@ namespace ProjectPI2 {
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(34)), static_cast<System::Int32>(static_cast<System::Byte>(36)),
 				static_cast<System::Int32>(static_cast<System::Byte>(49)));
 			this->ClientSize = System::Drawing::Size(463, 227);
+			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->panel2);
 			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->Wyp³aæ);
@@ -175,8 +192,12 @@ namespace ProjectPI2 {
 	}
 	private: System::Void buttonOK_Click(System::Object^ sender, System::EventArgs^ e) {
 		String^ newkwota = this->TBkwota->Text;
+		String^ waluta = this->comboBox1->Text;
 		if (newkwota == "") {
 			MessageBox::Show("Wprowadz kwote");
+		}
+		else if (waluta == "") {
+			MessageBox::Show("Wybierz walute");
 		}
 		else {
 			int kwota = Convert::ToInt32(newkwota);
@@ -185,21 +206,54 @@ namespace ProjectPI2 {
 			}
 			else {
 				String^ constring = "Data Source=localhost\\sqlexpress;Initial Catalog=dane;Integrated Security=True";
-
 				SqlConnection^ conDataBase = gcnew SqlConnection(constring);
-				SqlCommand^ cmdDataBase = gcnew SqlCommand("update Users set Saldo=Saldo+@kwota where id=@id;", conDataBase);
-				cmdDataBase->Parameters->AddWithValue("@kwota", kwota);
-				cmdDataBase->Parameters->AddWithValue("@id", User::id);
-				SqlDataReader^ myReader;
-				try {
-					conDataBase->Open();
-					myReader = cmdDataBase->ExecuteReader();
-					User:: saldo += kwota;
-					MessageBox::Show("Wplacono");
-					this->Close();
+				if (waluta == "PLN") {
+					SqlCommand^ cmdDataBase = gcnew SqlCommand("update Users set Saldo=Saldo+@kwota where id=@id;", conDataBase);
+					cmdDataBase->Parameters->AddWithValue("@kwota", kwota);
+					cmdDataBase->Parameters->AddWithValue("@id", User::id);
+					SqlDataReader^ myReader;
+					try {
+						conDataBase->Open();
+						myReader = cmdDataBase->ExecuteReader();
+						User::saldo += kwota;
+						MessageBox::Show("Wplacono");
+						this->Close();
+					}
+					catch (Exception^ ex) {
+						MessageBox::Show(ex->Message);
+					}
 				}
-				catch (Exception^ ex) {
-					MessageBox::Show(ex->Message);
+				else if (waluta == "USD") {
+					SqlCommand^ cmdDataBase = gcnew SqlCommand("update Users set Saldousd=Saldousd+@kwota where id=@id;", conDataBase);
+					cmdDataBase->Parameters->AddWithValue("@kwota", kwota);
+					cmdDataBase->Parameters->AddWithValue("@id", User::id);
+					SqlDataReader^ myReader;
+					try {
+						conDataBase->Open();
+						myReader = cmdDataBase->ExecuteReader();
+						User::saldo_usd += kwota;
+						MessageBox::Show("Wplacono");
+						this->Close();
+					}
+					catch (Exception^ ex) {
+						MessageBox::Show(ex->Message);
+					}
+				}
+				else if (waluta == "EUR") {
+					SqlCommand^ cmdDataBase = gcnew SqlCommand("update Users set Saldoeur=Saldoeur+@kwota where id=@id;", conDataBase);
+					cmdDataBase->Parameters->AddWithValue("@kwota", kwota);
+					cmdDataBase->Parameters->AddWithValue("@id", User::id);
+					SqlDataReader^ myReader;
+					try {
+						conDataBase->Open();
+						myReader = cmdDataBase->ExecuteReader();
+						User::saldo_eur += kwota;
+						MessageBox::Show("Wplacono");
+						this->Close();
+					}
+					catch (Exception^ ex) {
+						MessageBox::Show(ex->Message);
+					}
 				}
 			}
 

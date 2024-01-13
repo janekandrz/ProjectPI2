@@ -11,6 +11,8 @@ public:
 	static String^ pesel;
 	static String^ address;
 	static double saldo;
+	static double saldo_usd;
+	static double saldo_eur;
 	static int nr;
 
 	User(){
@@ -22,6 +24,8 @@ public:
 		User::address = address;
 		User::saldo = saldo;
 		User::nr = nr;
+		User::saldo_usd = saldo_usd;
+		User::saldo_eur = saldo_eur;
 	}
 
 	User(int arg_id, String^ arg_username, String^ arg_email, String^ arg_password, String^ arg_pesel, String^ arg_address, double arg_saldo, int arg_nr){

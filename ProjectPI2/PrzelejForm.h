@@ -57,6 +57,7 @@ namespace ProjectPI2 {
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::Panel^ panel3;
 	private: System::Windows::Forms::PictureBox^ pictureBox3;
+	private: System::Windows::Forms::ComboBox^ comboBox1;
 
 	protected:
 
@@ -89,6 +90,7 @@ namespace ProjectPI2 {
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->panel3 = (gcnew System::Windows::Forms::Panel());
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
+			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
@@ -183,9 +185,9 @@ namespace ProjectPI2 {
 			// pictureBox2
 			// 
 			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
-			this->pictureBox2->Location = System::Drawing::Point(17, 61);
+			this->pictureBox2->Location = System::Drawing::Point(21, 67);
 			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(50, 46);
+			this->pictureBox2->Size = System::Drawing::Size(46, 40);
 			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox2->TabIndex = 10;
 			this->pictureBox2->TabStop = false;
@@ -201,9 +203,9 @@ namespace ProjectPI2 {
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(17, 110);
+			this->pictureBox1->Location = System::Drawing::Point(21, 113);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(50, 46);
+			this->pictureBox1->Size = System::Drawing::Size(46, 43);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox1->TabIndex = 12;
 			this->pictureBox1->TabStop = false;
@@ -213,18 +215,32 @@ namespace ProjectPI2 {
 			this->panel3->BackColor = System::Drawing::Color::White;
 			this->panel3->Location = System::Drawing::Point(73, 194);
 			this->panel3->Name = L"panel3";
-			this->panel3->Size = System::Drawing::Size(370, 1);
+			this->panel3->Size = System::Drawing::Size(250, 1);
 			this->panel3->TabIndex = 15;
 			// 
 			// pictureBox3
 			// 
 			this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.Image")));
-			this->pictureBox3->Location = System::Drawing::Point(17, 158);
+			this->pictureBox3->Location = System::Drawing::Point(21, 162);
 			this->pictureBox3->Name = L"pictureBox3";
-			this->pictureBox3->Size = System::Drawing::Size(50, 46);
+			this->pictureBox3->Size = System::Drawing::Size(46, 42);
 			this->pictureBox3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox3->TabIndex = 14;
 			this->pictureBox3->TabStop = false;
+			// 
+			// comboBox1
+			// 
+			this->comboBox1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(32)), static_cast<System::Int32>(static_cast<System::Byte>(34)),
+				static_cast<System::Int32>(static_cast<System::Byte>(49)));
+			this->comboBox1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->comboBox1->ForeColor = System::Drawing::Color::White;
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L" PLN ", L" USD", L" EUR" });
+			this->comboBox1->Location = System::Drawing::Point(329, 170);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(116, 24);
+			this->comboBox1->TabIndex = 16;
+			this->comboBox1->Text = L"Waluta";
 			// 
 			// PrzelejForm
 			// 
@@ -233,6 +249,7 @@ namespace ProjectPI2 {
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(34)), static_cast<System::Int32>(static_cast<System::Byte>(36)),
 				static_cast<System::Int32>(static_cast<System::Byte>(49)));
 			this->ClientSize = System::Drawing::Size(491, 259);
+			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->panel3);
 			this->Controls->Add(this->pictureBox3);
 			this->Controls->Add(this->panel1);
@@ -265,13 +282,20 @@ private: System::Void buttonOK_Click(System::Object^ sender, System::EventArgs^ 
 	String^ tytul = this->TBtytul->Text;
 	String^ newkwota = this->TBkwota->Text;
 	String^ newodbiorca = this->TBodbiorca->Text;
+	String^ waluta = this->comboBox1->Text;
+
 	if (newkwota == "") {
 		MessageBox::Show("Wprowadz kwote");
 	}
 	else if(newodbiorca == "") {
 		MessageBox::Show("Wprowadz odbiorce");
 	}
-	
+	else if (tytul == "") {
+		MessageBox::Show("Wprowadz tytul");
+	}
+	else if (waluta == "") {
+		MessageBox::Show("Wybierz walute");
+	}
 	else {
 		int nr_rec = Convert::ToInt32(newodbiorca);
 		int kwota = Convert::ToInt32(newkwota);
@@ -285,26 +309,31 @@ private: System::Void buttonOK_Click(System::Object^ sender, System::EventArgs^ 
 			MessageBox::Show("Nie mozesz przelac samemu sobie");
 		}
 		else {
-			String^ constring = "Data Source=localhost\\sqlexpress;Initial Catalog=dane;Integrated Security=True";			
+			String^ constring = "Data Source=localhost\\sqlexpress;Initial Catalog=dane;Integrated Security=True";
 			SqlConnection^ conDataBase = gcnew SqlConnection(constring);
-			String^ query = "BEGIN TRANSACTION; " +
-							"UPDATE Users SET Saldo = Saldo - @kwota WHERE id = @id1; " +
-							"UPDATE Users SET Saldo = Saldo + @kwota WHERE nr = @nr; " +
-							"COMMIT;";
-			SqlCommand^ cmdDataBase = gcnew SqlCommand(query, conDataBase);
-			cmdDataBase->Parameters->AddWithValue("@kwota", kwota);
-			cmdDataBase->Parameters->AddWithValue("@id1", User::id);
-			cmdDataBase->Parameters->AddWithValue("@nr", nr_rec);
-		
-			SqlDataReader^ myReader;
-			try {
-				conDataBase->Open();
-				myReader = cmdDataBase->ExecuteReader();
 
+			if (waluta == " PLN") {
+				String^ query = "BEGIN TRANSACTION; " +
+					"UPDATE Users SET Saldo = Saldo - @kwota WHERE id = @id; " +
+					"UPDATE Users SET Saldo = Saldo + @kwota WHERE nr = @nr; " +
+					"COMMIT;";
+				SqlCommand^ cmdDataBase = gcnew SqlCommand(query, conDataBase);
+				cmdDataBase->Parameters->AddWithValue("@kwota", kwota);
+				cmdDataBase->Parameters->AddWithValue("@id", User::id);
+				cmdDataBase->Parameters->AddWithValue("@nr", nr_rec);
+
+				SqlDataReader^ myReader;
+				try {
+					conDataBase->Open();
+					myReader = cmdDataBase->ExecuteReader();
+				}
+				catch (Exception^ ex) {
+					MessageBox::Show(ex->Message);
+				}
 				if (myReader->RecordsAffected > 0) {
-					User:: saldo -= kwota;
+					User::saldo -= kwota;
 					this->Close();
-					
+
 					MailMessage^ mail = gcnew MailMessage();
 					mail->From = gcnew MailAddress(User::email);
 					mail->To->Add(User::email);
@@ -315,15 +344,87 @@ private: System::Void buttonOK_Click(System::Object^ sender, System::EventArgs^ 
 					klient->Credentials = gcnew System::Net::NetworkCredential("projektbankk@gmail.com", "fgqd ccij kwbk qxrt");
 					klient->EnableSsl = true;
 					klient->Send(mail);
-					MessageBox::Show("Wyslano maila z potweierdzeniem przelewu na ");
+					MessageBox::Show("Wyslano maila z potweierdzeniem przelewu");
 
 					this->Close();
 				}
 			}
-			catch (Exception^ ex) {
-				MessageBox::Show(ex->Message);
+			else if (waluta == " USD") {
+				String^ query = "BEGIN TRANSACTION; " +
+					"UPDATE Users SET Saldousd = Saldousd - @kwota WHERE id = @id; " +
+					"UPDATE Users SET Saldousd = Saldousd + @kwota WHERE nr = @nr; " +
+					"COMMIT;";
+				SqlCommand^ cmdDataBase = gcnew SqlCommand(query, conDataBase);
+				cmdDataBase->Parameters->AddWithValue("@kwota", kwota);
+				cmdDataBase->Parameters->AddWithValue("@id", User::id);
+				cmdDataBase->Parameters->AddWithValue("@nr", nr_rec);
+
+				SqlDataReader^ myReader;
+				try {
+					conDataBase->Open();
+					myReader = cmdDataBase->ExecuteReader();
+				}
+				catch (Exception^ ex) {
+					MessageBox::Show(ex->Message);
+				}
+				if (myReader->RecordsAffected > 0) {
+					User::saldo_usd -= kwota;
+					this->Close();
+
+					MailMessage^ mail = gcnew MailMessage();
+					mail->From = gcnew MailAddress(User::email);
+					mail->To->Add(User::email);
+					mail->Subject = "Potwierdzenie przelewu";
+					mail->Body = "Przelew na kwote " + kwota + waluta +" o tytule " + tytul + "na konto " + nr_rec + " zostal zrealizowany";
+					SmtpClient^ klient = gcnew SmtpClient("smtp.gmail.com");
+					klient->Port = 587;
+					klient->Credentials = gcnew System::Net::NetworkCredential("projektbankk@gmail.com", "fgqd ccij kwbk qxrt");
+					klient->EnableSsl = true;
+					klient->Send(mail);
+					MessageBox::Show("Wyslano maila z potweierdzeniem przelewu");
+
+					this->Close();
+				}
 			}
-		}	}
+			else if (waluta == " EUR") {
+				String^ query = "BEGIN TRANSACTION; " +
+					"UPDATE Users SET Saldoeur = Saldoeur - @kwota WHERE id = @id; " +
+					"UPDATE Users SET Saldoeur = Saldoeur + @kwota WHERE nr = @nr; " +
+					"COMMIT;";
+				SqlCommand^ cmdDataBase = gcnew SqlCommand(query, conDataBase);
+				cmdDataBase->Parameters->AddWithValue("@kwota", kwota);
+				cmdDataBase->Parameters->AddWithValue("@id", User::id);
+				cmdDataBase->Parameters->AddWithValue("@nr", nr_rec);
+
+				SqlDataReader^ myReader;
+				try {
+					conDataBase->Open();
+					myReader = cmdDataBase->ExecuteReader();
+				}
+				catch (Exception^ ex) {
+					MessageBox::Show(ex->Message);
+				}
+				if (myReader->RecordsAffected > 0) {
+					User::saldo_eur -= kwota;
+					this->Close();
+
+					MailMessage^ mail = gcnew MailMessage();
+					mail->From = gcnew MailAddress(User::email);
+					mail->To->Add(User::email);
+					mail->Subject = "Potwierdzenie przelewu";
+					mail->Body = "Przelew na kwote " + kwota + waluta + " o tytule " + tytul + "na konto " + nr_rec + " zostal zrealizowany";
+					SmtpClient^ klient = gcnew SmtpClient("smtp.gmail.com");
+					klient->Port = 587;
+					klient->Credentials = gcnew System::Net::NetworkCredential("projektbankk@gmail.com", "fgqd ccij kwbk qxrt");
+					klient->EnableSsl = true;
+					klient->Send(mail);
+					MessageBox::Show("Wyslano maila z potweierdzeniem przelewu");
+
+					this->Close();
+				}
+			}
+		}	
+	}
 }
 private: System::Void TBodbiorca_Click(System::Object^ sender, System::EventArgs^ e) {
 	TBodbiorca->Clear();

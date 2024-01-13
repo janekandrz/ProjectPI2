@@ -34,6 +34,10 @@ namespace ProjectPI2 {
 	private: System::Windows::Forms::PictureBox^ pictureBox6;
 	private: System::Windows::Forms::PictureBox^ pictureBox2;
 	private: System::Windows::Forms::PictureBox^ pictureBox4;
+	private: System::Windows::Forms::PictureBox^ pictureBox5;
+	private: System::Windows::Forms::Label^ labelsaldo_eur;
+	private: System::Windows::Forms::PictureBox^ pictureBox8;
+	private: System::Windows::Forms::Label^ labelsaldo_usd;
 	public:
 		PrzelejForm^ przelej;
 	
@@ -51,6 +55,8 @@ namespace ProjectPI2 {
 			labelpesel->Text = user->pesel;
 			labeladdress->Text = user->address;
 			labelsaldo->Text = "" + user->saldo +" PLN";
+			labelsaldo_usd->Text = "" + user->saldo_usd + " USD";
+			labelsaldo_eur->Text = "" + user->saldo_eur + " EUR";
 			labelnr->Text = "" + user->nr;
 
 			wplac = gcnew WplacForm();
@@ -120,6 +126,10 @@ namespace ProjectPI2 {
 			this->pictureBox6 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox5 = (gcnew System::Windows::Forms::PictureBox());
+			this->labelsaldo_eur = (gcnew System::Windows::Forms::Label());
+			this->pictureBox8 = (gcnew System::Windows::Forms::PictureBox());
+			this->labelsaldo_usd = (gcnew System::Windows::Forms::Label());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
@@ -127,6 +137,8 @@ namespace ProjectPI2 {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox6))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox8))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// labelstronaglowna
@@ -195,7 +207,7 @@ namespace ProjectPI2 {
 			// 
 			this->labelwelcome->AutoSize = true;
 			this->labelwelcome->ForeColor = System::Drawing::Color::White;
-			this->labelwelcome->Location = System::Drawing::Point(343, 45);
+			this->labelwelcome->Location = System::Drawing::Point(348, 45);
 			this->labelwelcome->Name = L"labelwelcome";
 			this->labelwelcome->Size = System::Drawing::Size(80, 20);
 			this->labelwelcome->TabIndex = 6;
@@ -380,6 +392,50 @@ namespace ProjectPI2 {
 			this->pictureBox4->TabIndex = 35;
 			this->pictureBox4->TabStop = false;
 			// 
+			// pictureBox5
+			// 
+			this->pictureBox5->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox5.Image")));
+			this->pictureBox5->Location = System::Drawing::Point(510, 330);
+			this->pictureBox5->Name = L"pictureBox5";
+			this->pictureBox5->Size = System::Drawing::Size(38, 35);
+			this->pictureBox5->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox5->TabIndex = 37;
+			this->pictureBox5->TabStop = false;
+			// 
+			// labelsaldo_eur
+			// 
+			this->labelsaldo_eur->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->labelsaldo_eur->ForeColor = System::Drawing::Color::White;
+			this->labelsaldo_eur->Location = System::Drawing::Point(555, 335);
+			this->labelsaldo_eur->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
+			this->labelsaldo_eur->Name = L"labelsaldo_eur";
+			this->labelsaldo_eur->Size = System::Drawing::Size(150, 20);
+			this->labelsaldo_eur->TabIndex = 36;
+			this->labelsaldo_eur->Text = L"danesaldo eur";
+			// 
+			// pictureBox8
+			// 
+			this->pictureBox8->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox8.Image")));
+			this->pictureBox8->Location = System::Drawing::Point(510, 378);
+			this->pictureBox8->Name = L"pictureBox8";
+			this->pictureBox8->Size = System::Drawing::Size(38, 35);
+			this->pictureBox8->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox8->TabIndex = 39;
+			this->pictureBox8->TabStop = false;
+			// 
+			// labelsaldo_usd
+			// 
+			this->labelsaldo_usd->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->labelsaldo_usd->ForeColor = System::Drawing::Color::White;
+			this->labelsaldo_usd->Location = System::Drawing::Point(555, 383);
+			this->labelsaldo_usd->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
+			this->labelsaldo_usd->Name = L"labelsaldo_usd";
+			this->labelsaldo_usd->Size = System::Drawing::Size(150, 20);
+			this->labelsaldo_usd->TabIndex = 38;
+			this->labelsaldo_usd->Text = L"danesaldo usd ";
+			// 
 			// dashboard
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 20);
@@ -387,6 +443,10 @@ namespace ProjectPI2 {
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(34)), static_cast<System::Int32>(static_cast<System::Byte>(36)),
 				static_cast<System::Int32>(static_cast<System::Byte>(49)));
 			this->ClientSize = System::Drawing::Size(774, 609);
+			this->Controls->Add(this->pictureBox8);
+			this->Controls->Add(this->labelsaldo_usd);
+			this->Controls->Add(this->pictureBox5);
+			this->Controls->Add(this->labelsaldo_eur);
 			this->Controls->Add(this->pictureBox4);
 			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->pictureBox6);
@@ -416,6 +476,8 @@ namespace ProjectPI2 {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox6))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox8))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -433,6 +495,8 @@ namespace ProjectPI2 {
 				labelpesel->Text = user->pesel;
 				labeladdress->Text = user->address;
 				labelsaldo->Text = ""+user->saldo + " PLN";
+				labelsaldo_usd->Text = "" + user->saldo_usd + " USD";
+				labelsaldo_eur->Text = "" + user->saldo_eur + " EUR";
 				labelnr->Text= ""+user->nr;
 			} 
 
@@ -440,14 +504,20 @@ namespace ProjectPI2 {
 		
 			wplac->ShowDialog();
 			labelsaldo->Text = ""+user->saldo + " PLN";
+			labelsaldo_usd->Text = "" + user->saldo_usd + " USD";
+			labelsaldo_eur->Text = "" + user->saldo_eur + " EUR";
 		}
 		void OpenWyplacForm() {
 			wyplac->ShowDialog();
 			labelsaldo->Text = "" + user->saldo + " PLN";
+			labelsaldo_usd->Text = "" + user->saldo_usd + " USD";
+			labelsaldo_eur->Text = "" + user->saldo_eur + " EUR";
 		}
 		void OpenPrzelejForm() {
 			przelej->ShowDialog();
 			labelsaldo->Text = "" + user->saldo + " PLN";
+			labelsaldo_usd->Text = "" + user->saldo_usd + " USD";
+			labelsaldo_eur->Text = "" + user->saldo_eur + " EUR";
 		}	
 #pragma endregion
 private: System::Void buttonEXIT_Click(System::Object^ sender, System::EventArgs^ e) {

@@ -320,6 +320,8 @@ namespace ProjectPI2 {
 				user->password = reader->GetString(4);
 				user->saldo = reader->GetDouble(6);
 				user->nr = reader->GetInt32(7);
+				user->saldo_usd = reader->GetDouble(8);
+				user->saldo_eur = reader->GetDouble(9);
 				
 				
 				this->Close();
